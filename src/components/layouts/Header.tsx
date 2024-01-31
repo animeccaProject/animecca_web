@@ -11,8 +11,8 @@ const Header = () => {
 
   return (
     <div className="App">
-    <div className="container mx-auto px-3">
-      <header className="flex justify-between py-3">
+    <div className="container mx-auto px-3 bg-blue-300">
+      <header className="flex justify-between py-3 ">
         <h1>ロゴ</h1>
 
         {/* humbergerbutton */}
@@ -56,6 +56,8 @@ const Header = () => {
             <li><a href='/'>TOP</a></li>
             <li><a href='/mylist'>マイリスト</a></li>
             <li><a href='/mecca'>聖地の登録</a></li>
+            <li><a href='/login'>ログイン</a></li>
+            <li><a href='/register'>会員登録</a></li>
             <li>ログアウト</li>
           </ul>
         </nav>
