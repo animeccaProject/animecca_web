@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 const Registerpage = () => {
@@ -7,6 +8,7 @@ const Registerpage = () => {
   const [password, setPassword] = useState()
   const [passwordConfirmation, setPasswordConfirmation] = useState()
 
+  const router = useRouter()
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
   const onSubmitRegister = async (e) => {
