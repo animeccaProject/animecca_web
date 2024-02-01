@@ -1,0 +1,277 @@
+.title {
+  text-align: center;
+  font-size: 40px;
+}
+
+.japanMap {
+  display: block;
+  margin: auto;
+  margin-top: 50px;
+  width: 60%;
+}
+
+.animeccaMap {
+  position: relative;
+  border-radius: 1.388888889vw;
+  border: none;
+  padding: 5.2777777778vw 0 0;
+  overflow: auto;
+}
+
+.animeccaMapItemPrefecture {
+  position: relative;
+}
+
+/*北海道*/
+.japanMapAreaHokkaido {
+  position: absolute;
+  top: 13.5833333333vw;
+  right: 100px;
+  font-size: 1.7888888889vw;
+  font-weight: 700;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  transition-property: color;
+}
+
+.animeccaMapListHokkaido {
+  padding: 1.1111111111vw 0 0 2.2222222222vw;
+  -webkit-box-align: start;
+  align-items: flex-start;
+  width: 8.3333333333vw;
+  height: 13.194444444vw;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: rgb(151, 229, 253);
+  border: 2px solid #3b3938;
+  border-radius: 0.6944444444vw;
+}
+
+/*東北*/
+.japanMapAreaTohoku {
+  position: absolute;
+  top: 30.6944444444vw;
+  left: 70.625vw;
+  font-size: 1.7888888889vw;
+  font-weight: 700;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  transition-property: color;
+}
+
+.animeccaMapListTohoku {
+  padding: 1.1111111111vw 0 0 2.2222222222vw;
+  -webkit-box-align: start;
+  align-items: flex-start;
+  width: 16.6666666667vw;
+  height: 10.8333333333vw;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  position: relative;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: rgb(171, 192, 248);
+  border: 2px solid #3b3938;
+  border-radius: 0.6944444444vw;
+}
+
+/*関東*/
+.japanMapAreaKanto {
+  position: absolute;
+  top: 46.7638888889vw;
+  left: 67.625vw;
+  font-size: 1.7888888889vw;
+  font-weight: 700;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  transition-property: color;
+}
+
+.animeccaMapListKanto {
+  padding: 1.1111111111vw 0 0 2.2222222222vw;
+  -webkit-box-align: start;
+  align-items: flex-start;
+  width: 16.6666666667vw;
+  height: 13.19444444444vw;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  position: relative;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: rgba(255, 205, 205, 0.973);
+  border: 2px solid #3b3938;
+  border-radius: 0.6944444444vw;
+}
+
+/*東海*/
+.japanMapAreaTokai {
+  position: absolute;
+  top: 58.7638888889vw;
+  left: 57.4444444444vw;
+  font-size: 1.7888888889vw;
+  font-weight: 700;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  transition-property: color;
+}
+
+.animeccaMapListTokai {
+  padding: 1.1111111111vw 0 0 2.2222222222vw;
+  -webkit-box-align: start;
+  align-items: flex-start;
+  width: 8.3333333333vw;
+  height: 13.194444444vw;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: rgb(184, 224, 184);
+  border: 2px solid #3b3938;
+  border-radius: 0.6944444444vw;
+}
+
+/*北信越*/
+.japanMapAreaHokushinetsu {
+  position: absolute;
+  top: 18.0277777778vw;
+  left: 38vw;
+  font-size: 1.7888888889vw;
+  font-weight: 700;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  transition-property: color;
+}
+
+.animeccaMapListHokushinetsu {
+  padding: 1.1111111111vw 0 0 2.2222222222vw;
+  -webkit-box-align: start;
+  align-items: flex-start;
+  width: 16.6666666667vw;
+  height: 10.8333333333vw;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  position: relative;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: rgb(184, 224, 184);
+  border: 2px solid #3b3938;
+  border-radius: 0.6944444444vw;
+}
+
+/*関西*/
+.japanMapAreaKansai {
+  position: absolute;
+  top: 32.9583333333vw;
+  left: 32vw;
+  font-size: 1.7888888889vw;
+  font-weight: 700;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  transition-property: color;
+}
+
+.animeccaMapListKansai {
+  padding: 1.1111111111vw 0 0 2.2222222222vw;
+  -webkit-box-align: start;
+  align-items: flex-start;
+  width: 16.6666666667vw;
+  height: 10.8333333333vw;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  position: relative;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: rgb(250, 234, 165);
+  border: 2px solid #3b3938;
+  border-radius: 0.6944444444vw;
+}
+
+/*四国・中国*/
+.japanMapAreaSikokuChugoku {
+  position: absolute;
+  top: 18.0277777778vw;
+  left: 13.55555555556vw;
+  font-size: 1.7888888889vw;
+  font-weight: 700;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  transition-property: color;
+}
+
+.animeccaMapListSikokuChugoku {
+  padding: 1.1111111111vw 0 0 2.2222222222vw;
+  -webkit-box-align: start;
+  align-items: flex-start;
+  width: 16.6666666667vw;
+  height: 16.5277777778vw;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  position: relative;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: rgb(213, 202, 255);
+  border: 2px solid #3b3938;
+  border-radius: 0.6944444444vw;
+}
+
+/*九州・沖縄*/
+.japanMapAreaKyuusyuOkinawa {
+  position: absolute;
+  top: 42.9583333333vw;
+  left: 10.55555555556vw;
+  font-size: 1.7888888889vw;
+  font-weight: 700;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-delay: 0s;
+  transition-property: color;
+}
+
+.animeccaMapListKyuusyuOkinawa {
+  padding: 1.1111111111vw 0 0 2.2222222222vw;
+  -webkit-box-align: start;
+  align-items: flex-start;
+  width: 16.6666666667vw;
+  height: 13.1944444444vw;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  position: relative;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: rgb(255, 185, 243);
+  border: 2px solid #3b3938;
+  border-radius: 0.6944444444vw;
+}
