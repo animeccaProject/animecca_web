@@ -19,8 +19,20 @@ export default function New() {
   const [places, setPlaces] = useState([])
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  const episodes = []
+  const episodeMax = 10 // Annict から取得したい
+  for (let i = 1; i <= episodeMax; i++) {
+    episodes.push(i)
+  }
 
   const inputStyle = 'border-b border-gray-400 focus:outline-none'
+
+  function formatScene(seconds) {
+    const hours = Math.floor(seconds / 3600)
+    const minutes = Math.floor((seconds % 3600) / 60)
+    const secs = seconds % 60
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  }
 
   async function getInfoByPlace() {
     const res = await fetch(`/api/map/getinfo-byplace?place=${placeName}`)
@@ -30,11 +42,16 @@ export default function New() {
     console.log(places)
   }
 
-  function formatScene(seconds) {
-    const hours = Math.floor(seconds / 3600)
-    const minutes = Math.floor((seconds % 3600) / 60)
-    const secs = seconds % 60
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  function handleSelectedPlace(place) {
+    // 都道府県名の取得
+    const prefectureComponent = place.addressComponents.find((component) =>
+      component.types.includes('administrative_area_level_1'),
+    )
+    const prefecture = prefectureComponent ? prefectureComponent.longText : null
+
+    setPlaceName(place.displayName.text)
+    setPlaceId(place.id)
+    setPrefecture(prefecture)
   }
 
   async function postMecca(e) {
@@ -87,18 +104,6 @@ export default function New() {
     }
   }
 
-  function handleSelectedPlace(place) {
-    // 都道府県名の取得
-    const prefectureComponent = place.addressComponents.find((component) =>
-      component.types.includes('administrative_area_level_1'),
-    )
-    const prefecture = prefectureComponent ? prefectureComponent.longText : null
-
-    setPlaceName(place.displayName.text)
-    setPlaceId(place.id)
-    setPrefecture(prefecture)
-  }
-
   return (
     <>
       <h1 className="text-2xl">聖地の登録</h1>
@@ -116,14 +121,19 @@ export default function New() {
         </div>
         <div className="flex">
           <p>話数</p>
-          <input
-            type="number"
-            placeholder=""
-            className={inputStyle}
+          <select
             onChange={(e) => {
               setEpisode(e.target.value)
             }}
-          />
+          >
+            {episodes.map((episode) => {
+              return (
+                <option key={episode} value={episode}>
+                  {episode}
+                </option>
+              )
+            })}
+          </select>
         </div>
         <div className="flex">
           <p>シーン(秒数)</p>
