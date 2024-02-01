@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useRouter } from 'next/navigation'
@@ -41,10 +42,14 @@ const Registerpage = () => {
     <div className="min-h-screen py-8 px-4 md:px-12">
       <h2 className="text-2xl font-bold mb-4">新規登録</h2>
 
+
+      
+
       <form
         className="bg-slate-200 p-6 rounded shadow-lg"
         onSubmit={onSubmitRegister}
       >
+
         <div className="mb-4">
           <label className="text-gray-700 text-sm font-bold mb-2">
             ユーザー名
@@ -53,9 +58,11 @@ const Registerpage = () => {
             type="text"
             className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
             placeholder="名前を入力"
+
             onChange={(e) => {
               setUsername(e.target.value)
             }}
+
           />
         </div>
 
@@ -67,9 +74,11 @@ const Registerpage = () => {
             type="password"
             className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
             placeholder="パスワードを入力"
+
             onChange={(e) => {
               setPassword(e.target.value)
             }}
+
           />
         </div>
 
@@ -81,9 +90,12 @@ const Registerpage = () => {
             type="password"
             className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
             placeholder="確認用のパスワードを入力"
+
+
             onChange={(e) => {
               setPasswordConfirmation(e.target.value)
             }}
+
           />
         </div>
 
