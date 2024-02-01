@@ -13,7 +13,7 @@ export default function New() {
   const [about, setAbout] = useState('')
   const [placeId, setPlaceId] = useState('')
   const [prefecture, setPrefecture] = useState('')
-  const [photos, setPhotos] = useState([])
+  const [photos, setPhotos] = useState(null)
 
   const [placeName, setPlaceName] = useState('')
   const [places, setPlaces] = useState([])
@@ -40,33 +40,43 @@ export default function New() {
   async function postMecca(e) {
     e.preventDefault()
 
-    const scene = formatScene(sceneSeconds)
-    const mecca = {
-      mecca: {
+    const mecca = new FormData()
+
+    mecca.append(
+      'mecca',
+      JSON.stringify({
         anime_id: 1,
         title,
         episode,
-        scene,
+        scene: formatScene(sceneSeconds),
         mecca_name: meccaName,
         about,
         place_id: placeId,
         prefecture,
-        // photos: ['画像のパス1', '画像のパス2', '画像のパス3'],
         // user_id: 5,
-      },
+      }),
+    )
+
+    if (photos) {
+      for (let i = 0; i < photos.length; i++) {
+        mecca.append(`photos[${i}]`, photos[i])
+      }
     }
 
     // 確認用
-    console.log(mecca)
+    for (let [key, value] of mecca.entries()) {
+      console.log(`${key}: ${value}`)
+    }
 
     const token = await getCookie('token')
     const res = await fetch(`${apiUrl}/meccas`, {
       method: 'POST',
       headers: {
-        'Content-type': 'application/json',
+        // 'Content-type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(mecca),
+      // body: JSON.stringify(mecca),
+      body: mecca,
     })
 
     const data = await res.json()
@@ -164,7 +174,15 @@ export default function New() {
         </div>
         <div className="flex">
           <p>画像</p>
-          <input type="text" placeholder="" className={inputStyle} />
+          <input
+            type="file"
+            multiple
+            placeholder=""
+            className={inputStyle}
+            onChange={(e) => {
+              setPhotos(e.target.files)
+            }}
+          />
         </div>
         <button type="submit" className="bg-gray-300">
           登録
