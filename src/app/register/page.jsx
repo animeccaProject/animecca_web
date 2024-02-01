@@ -43,7 +43,7 @@ const Registerpage = () => {
       <h2 className="text-2xl font-bold mb-4">新規登録</h2>
 
 
-      <form className="bg-slate-200 p-6 rounded shadow-lg">
+      
 
       <form
         className="bg-slate-200 p-6 rounded shadow-lg"
