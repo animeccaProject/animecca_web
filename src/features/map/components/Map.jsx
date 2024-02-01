@@ -60,25 +60,30 @@ export default function GoogleMap({ places, handleSelectedPlace }) {
   }
 
   return (
-    <>
+    <div className="flex">
       <div id="map" style={{ height: '400px', width: '400px' }} />
-      <div>
-        {selectedPlace !== null && (
-          <>
-            <p>{selectedPlace.displayName.text}</p>
-            <p>{selectedPlace.formattedAddress}</p>
-            <img src={photoUrl} alt="" />
-          </>
-        )}
+      <div className="flex">
+        <div style={{ height: '300px', width: '300px', border: '1px solid' }}>
+          {selectedPlace !== null && (
+            <>
+              <p>{selectedPlace.displayName.text}</p>
+              <p>{selectedPlace.formattedAddress}</p>
+              <img src={photoUrl} alt="" />
+            </>
+          )}
+        </div>
+        <div>
+          <p>ピンをクリックすると詳細が表示されます</p>
+          <button
+            className="bg-gray-300 p-2"
+            onClick={() => {
+              handleSelectedPlace(selectedPlace)
+            }}
+          >
+            この場所を選択する
+          </button>
+        </div>
       </div>
-      <button
-        className="bg-gray-300"
-        onClick={() => {
-          handleSelectedPlace(selectedPlace)
-        }}
-      >
-        決定
-      </button>
-    </>
+    </div>
   )
 }

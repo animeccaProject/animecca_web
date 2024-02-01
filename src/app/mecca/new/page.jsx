@@ -105,100 +105,107 @@ export default function New() {
   }
 
   return (
-    <>
-      <h1 className="text-2xl">聖地の登録</h1>
-      <form onSubmit={postMecca}>
-        <div className="flex">
-          <p>作品名</p>
-          <input
-            type="text"
-            placeholder=""
-            className={inputStyle}
-            onChange={(e) => {
-              setTitle(e.target.value)
-            }}
-          />
-        </div>
-        <div className="flex">
-          <p>話数</p>
-          <select
-            onChange={(e) => {
-              setEpisode(e.target.value)
-            }}
-          >
-            {episodes.map((episode) => {
-              return (
-                <option key={episode} value={episode}>
-                  {episode}
-                </option>
-              )
-            })}
-          </select>
-        </div>
-        <div className="flex">
-          <p>シーン(秒数)</p>
-          <input
-            type="range"
-            min={0}
-            max={10800}
-            onChange={(e) => {
-              setSceneSeconds(e.target.value)
-            }}
-          />
-          <span>{formatScene(sceneSeconds)}</span>
-        </div>
-        <div className="flex">
-          <p>聖地名</p>
-          <input
-            type="text"
-            placeholder=""
-            className={inputStyle}
-            onChange={(e) => {
-              setMeccaName(e.target.value)
-            }}
-          />
-        </div>
-        <div className="flex">
-          <p>場所</p>
-          <input
-            type="text"
-            placeholder=""
-            className={inputStyle}
-            onChange={(e) => {
-              setPlaceName(e.target.value)
-            }}
-            value={placeName}
-          />
-          <div onClick={getInfoByPlace}>検索</div>
-        </div>
-        <div className="flex">
-          <p>概要</p>
-          <input
-            type="text"
-            placeholder=""
-            className={inputStyle}
-            onChange={(e) => {
-              setAbout(e.target.value)
-            }}
-          />
-        </div>
-        <div className="flex">
-          <p>画像</p>
-          <input
-            type="file"
-            multiple
-            placeholder=""
-            className={inputStyle}
-            onChange={(e) => {
-              setPhotos(e.target.files)
-            }}
-          />
-        </div>
-        <button type="submit" className="bg-gray-300">
-          登録
-        </button>
-      </form>
+    <div className="flex">
+      <div>
+        <h1 className="text-2xl">聖地の登録</h1>
+        <form onSubmit={postMecca}>
+          <div className="flex">
+            <p>作品名</p>
+            <input
+              type="text"
+              placeholder=""
+              className={inputStyle}
+              onChange={(e) => {
+                setTitle(e.target.value)
+              }}
+            />
+          </div>
+          <div className="flex">
+            <p>話数</p>
+            <select
+              onChange={(e) => {
+                setEpisode(e.target.value)
+              }}
+            >
+              {episodes.map((episode) => {
+                return (
+                  <option key={episode} value={episode}>
+                    {episode}
+                  </option>
+                )
+              })}
+            </select>
+          </div>
+          <div className="flex">
+            <p>シーン(秒数)</p>
+            <input
+              type="range"
+              min={0}
+              max={10800}
+              onChange={(e) => {
+                setSceneSeconds(e.target.value)
+              }}
+            />
+            <span>{formatScene(sceneSeconds)}</span>
+          </div>
+          <div className="flex">
+            <p>聖地名</p>
+            <input
+              type="text"
+              placeholder=""
+              className={inputStyle}
+              onChange={(e) => {
+                setMeccaName(e.target.value)
+              }}
+            />
+          </div>
+          <div className="flex">
+            <p>場所</p>
+            <input
+              type="text"
+              placeholder=""
+              className={inputStyle}
+              onChange={(e) => {
+                setPlaceName(e.target.value)
+              }}
+              value={placeName}
+            />
+            <div
+              className="cursor-pointer bg-gray-300 p-2"
+              onClick={getInfoByPlace}
+            >
+              検索する
+            </div>
+          </div>
+          <div className="flex">
+            <p>概要</p>
+            <input
+              type="text"
+              placeholder=""
+              className={inputStyle}
+              onChange={(e) => {
+                setAbout(e.target.value)
+              }}
+            />
+          </div>
+          <div className="flex">
+            <p>画像</p>
+            <input
+              type="file"
+              multiple
+              placeholder=""
+              className={inputStyle}
+              onChange={(e) => {
+                setPhotos(e.target.files)
+              }}
+            />
+          </div>
+          <button type="submit" className="bg-gray-300 p-2">
+            聖地を登録する
+          </button>
+        </form>
+      </div>
       <Map places={places} handleSelectedPlace={handleSelectedPlace} />
-    </>
+    </div>
   )
 }
