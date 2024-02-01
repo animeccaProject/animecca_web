@@ -14,7 +14,7 @@ export async function GET(req) {
   const body = JSON.stringify({
     textQuery: place,
     languageCode: 'ja',
-    maxResultCount: 5, // 取得する場所の最大数
+    maxResultCount: 3, // 取得する場所の最大数
   })
 
   const res = await fetch(url, {

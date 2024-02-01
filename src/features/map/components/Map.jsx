@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 export default function GoogleMap({ places, handleSelectedPlace }) {
   const [selectedPlace, setSelectedPlace] = useState(null)
+  const [photoUrl, setPhotoUrl] = useState(null)
 
   const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY
 
@@ -31,6 +32,7 @@ export default function GoogleMap({ places, handleSelectedPlace }) {
 
         marker.addListener('click', () => {
           setSelectedPlace(place)
+          getPlacePhoto(place.photos[0].name)
         })
       })
 
@@ -51,6 +53,12 @@ export default function GoogleMap({ places, handleSelectedPlace }) {
     }
   }, [places])
 
+  async function getPlacePhoto(photoName) {
+    const res = await fetch(`/api/map/getphoto?photo=${photoName}`)
+    const { url } = await res.json()
+    setPhotoUrl(url)
+  }
+
   return (
     <>
       <div id="map" style={{ height: '400px', width: '400px' }} />
@@ -59,6 +67,7 @@ export default function GoogleMap({ places, handleSelectedPlace }) {
           <>
             <p>{selectedPlace.displayName.text}</p>
             <p>{selectedPlace.formattedAddress}</p>
+            <img src={photoUrl} alt="" />
           </>
         )}
       </div>
