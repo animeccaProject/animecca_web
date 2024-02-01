@@ -1,12 +1,14 @@
 'use client'
 
 import { setCookie } from '@/utils/cookies'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 const Loginpage = () => {
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
 
+  const router = useRouter()
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
   const onSubmitLogin = async (e) => {
