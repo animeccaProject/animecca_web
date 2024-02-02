@@ -1,4 +1,6 @@
 'use client'
+
+import Link from 'next/link'
 import { useState } from 'react'
 
 const Header = () => {
@@ -10,7 +12,9 @@ const Header = () => {
     <div className="App">
       <div className="container mx-auto px-3">
         <header className="flex justify-between py-3 ">
-          <h1>ロゴ</h1>
+          <Link href="/">
+            <h1>ロゴ</h1>
+          </Link>
 
           {/* humbergerbutton */}
           <button
