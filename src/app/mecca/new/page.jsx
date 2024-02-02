@@ -14,7 +14,7 @@ export default function New() {
   const [about, setAbout] = useState('')
   const [placeId, setPlaceId] = useState('')
   const [prefecture, setPrefecture] = useState('')
-  const [photos, setPhotos] = useState(null)
+  const [images, setImages] = useState(null)
 
   const [placeName, setPlaceName] = useState('')
   const [places, setPlaces] = useState([])
@@ -78,13 +78,12 @@ export default function New() {
         about,
         place_id: placeId,
         prefecture,
-        // user_id: 5,
       }),
     )
 
-    if (photos) {
-      for (let i = 0; i < photos.length; i++) {
-        mecca.append(`photos[${i}]`, photos[i])
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
+        mecca.append(`image[${i}]`, images[i])
       }
     }
 
@@ -97,10 +96,8 @@ export default function New() {
     const res = await fetch(`${apiUrl}/meccas`, {
       method: 'POST',
       headers: {
-        // 'Content-type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      // body: JSON.stringify(mecca),
       body: mecca,
     })
 
@@ -216,7 +213,7 @@ export default function New() {
               placeholder=""
               className={inputStyle}
               onChange={(e) => {
-                setPhotos(e.target.files)
+                setImages(e.target.files)
               }}
             />
           </div>
