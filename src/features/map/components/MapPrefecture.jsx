@@ -1,20 +1,37 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-export default function MapPrefecture({ places, handleSelectedPlaceIndex }) {
+export default function MapPrefecture({
+  places,
+  prefecture,
+  handleSelectedPlaceIndex,
+}) {
+  const [centerLocation, setCenterLocation] = useState()
+
   const apiKey = process.env.NEXT_PUBLIC_MAP_API_KEY
 
   useEffect(() => {
-    if (places.length === 0) return
+    if (!prefecture) return
+
+    async function getCenterLocation() {
+      const res = await fetch(`/api/map/getinfo-byplace?place=${prefecture}`)
+      const data = await res.json()
+      setCenterLocation(data.places[0].location)
+    }
+    getCenterLocation()
+  }, [prefecture])
+
+  useEffect(() => {
+    if (places.length === 0 || !prefecture) return
 
     const initMap = () => {
+      if (!centerLocation) return
+
       const map = new google.maps.Map(document.getElementById('map'), {
         center: {
-          // lat: places[0].location.latitude,
-          // lng: places[0].location.longitude,
-          lat: 35.6764225,
-          lng: 139.650027,
+          lat: centerLocation.latitude,
+          lng: centerLocation.longitude,
         },
         zoom: 8,
       })
@@ -36,8 +53,6 @@ export default function MapPrefecture({ places, handleSelectedPlaceIndex }) {
 
       map.addListener('click', (e) => {
         map.panTo(e.latLng)
-        const clickedLocation = e.latLng
-        console.log(clickedLocation.toString())
       })
     }
 
@@ -51,7 +66,7 @@ export default function MapPrefecture({ places, handleSelectedPlaceIndex }) {
     } else {
       initMap()
     }
-  }, [places])
+  }, [places, centerLocation])
 
   return <div id="map" style={{ height: '400px', width: '400px' }} />
 }

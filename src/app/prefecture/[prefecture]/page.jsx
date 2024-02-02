@@ -165,6 +165,7 @@ export default function Prefecture({ params }) {
         </h1>
         <MapPrefecture
           places={places}
+          prefecture={params.prefecture}
           handleSelectedPlaceIndex={handleSelectedPlaceIndex}
         />
       </div>
