@@ -227,7 +227,7 @@ export default function Prefecture({ params }) {
                         xmlns="http://www.w3.org/2000/svg"
                         width="14"
                         height="14"
-                        fill="red"
+                        fill="#ed5871"
                         class="bi bi-suit-heart-fill"
                         viewBox="0 0 16 16"
                       >
