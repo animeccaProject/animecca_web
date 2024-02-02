@@ -33,7 +33,7 @@ export default function MapPrefecture({
           lat: centerLocation.latitude,
           lng: centerLocation.longitude,
         },
-        zoom: 8,
+        zoom: 9,
       })
 
       places.forEach((place, index) => {
@@ -68,5 +68,5 @@ export default function MapPrefecture({
     }
   }, [places, centerLocation])
 
-  return <div id="map" style={{ height: '400px', width: '400px' }} />
+  return <div id="map" style={{ height: '400px', width: '530px' }} />
 }

@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prefecture */
+.ellipsismulti {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* 表示する行数 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scrollable::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollable {
+  -ms-overflow-style: none; /* IEおよびEdge */
+  scrollbar-width: none; /* Firefox */
+  overflow-y: scroll; /* スクロール機能は保持 */
+}
+
 /* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
