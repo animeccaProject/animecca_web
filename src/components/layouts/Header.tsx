@@ -58,7 +58,7 @@ const Header = () => {
                 <a href="/mylist">マイリスト</a>
               </li>
               <li className="mt-2">
-                <a href="/mecca">聖地の登録</a>
+                <a href="/mecca/new">聖地の登録</a>
               </li>
               <li className="mt-2">
                 <a href="/login">ログイン</a>
