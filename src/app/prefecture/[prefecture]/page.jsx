@@ -1,23 +1,39 @@
 'use client'
 
+import MapPrefecture from '@/features/map/components/MapPrefecture'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Prefecture({ params }) {
   const [meccas, setMeccas] = useState([])
   const [placeIds, setPlaceIds] = useState([])
-  const [placeInfos, setPlaceInfos] = useState([])
+  const [places, setPlaces] = useState([])
+  const [selectedIndex, setSelectedIndex] = useState()
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
-  const prefecture = decodeURIComponent(params.prefecture)
+  const scrollContainerRef = useRef(null)
+  const selectedItemRef = useRef(null)
 
   useEffect(() => {
     getMeccasByPrefecture()
   }, [params.prefecture])
 
   useEffect(() => {
-    getPlaceInfo()
+    getPlacesInfo()
   }, [meccas])
+
+  useEffect(() => {
+    if (selectedItemRef.current && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top:
+          selectedItemRef.current.offsetTop -
+          scrollContainerRef.current.offsetTop,
+        behavior: 'smooth',
+      })
+    }
+  }, [selectedIndex])
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  const prefecture = decodeURIComponent(params.prefecture)
 
   async function getMeccasByPrefecture() {
     // const token = await getCookie('token')
@@ -30,7 +46,6 @@ export default function Prefecture({ params }) {
     //   },
     // )
     // const data = await res.json()
-    // setMeccas(data.meccas)
     const meccasDummy = [
       {
         mecca_id: '1',
@@ -113,6 +128,12 @@ export default function Prefecture({ params }) {
         is_favorite: 'お気に入り登録しているかどうか',
       },
     ]
+    // setMeccas(data.meccas)
+    // setPlaceIds(
+    //   data.meccas.map((mecca) => {
+    //     return mecca.place_id
+    //   }),
+    // )
     setMeccas(meccasDummy)
     setPlaceIds(
       meccasDummy.map((mecca) => {
@@ -121,15 +142,18 @@ export default function Prefecture({ params }) {
     )
   }
 
-  async function getPlaceInfo() {
+  async function getPlacesInfo() {
     if (placeIds.length === 0) return
 
     const fetchPromises = placeIds.map((placeId) =>
       fetch(`/api/map/getinfo-byid?id=${placeId}`).then((res) => res.json()),
     )
     const results = await Promise.all(fetchPromises)
-    console.log(results)
-    setPlaceInfos(results)
+    setPlaces(results)
+  }
+
+  function handleSelectedPlaceIndex(index) {
+    setSelectedIndex(index)
   }
 
   return (
@@ -139,30 +163,41 @@ export default function Prefecture({ params }) {
           {prefecture}
           <span>の聖地一覧</span>
         </h1>
-        <div style={{ height: '300px', width: '300px', border: '1px solid' }}>
-          地図
-        </div>
+        <MapPrefecture
+          places={places}
+          handleSelectedPlaceIndex={handleSelectedPlaceIndex}
+        />
       </div>
       <div
         style={{ height: '300px', width: '300px', border: '1px solid' }}
         className="overflow-y-auto"
+        ref={scrollContainerRef}
       >
         {meccas.length !== 0 &&
           meccas.map((mecca, index) => {
+            const isSpecialIndex = index === selectedIndex
+            const itemStyle = isSpecialIndex
+              ? 'border-b border-gray-600 p-5 bg-yellow-100'
+              : 'border-b border-gray-600 p-5'
+
             return (
-              <Link key={index} href={`/mecca/${mecca.mecca_id}`}>
-                <div className="border-b border-gray-600 p-5">
+              <div
+                key={index}
+                className={itemStyle}
+                ref={isSpecialIndex ? selectedItemRef : null}
+              >
+                <Link href={`/mecca/${mecca.mecca_id}`}>
                   <h2>{mecca.title}</h2>
                   <p>{mecca.mecca_name}</p>
-                  {placeInfos.length !== 0 && (
+                  {places.length !== 0 && (
                     <div className="flex">
-                      <p>{placeInfos[index].displayName.text}</p>
-                      <p>{placeInfos[index].formattedAddress.split(' ')[1]}</p>
+                      <p>{places[index].displayName.text}</p>
+                      <p>{places[index].formattedAddress.split(' ')[1]}</p>
                     </div>
                   )}
                   <p>{mecca.about}</p>
-                </div>
-              </Link>
+                </Link>
+              </div>
             )
           })}
       </div>
