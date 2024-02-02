@@ -1,7 +1,0 @@
-.ellipsismulti {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* 表示する行数 */
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
