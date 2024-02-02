@@ -7,7 +7,9 @@ const Home = () => {
     <div className={styles.animeccaMap}>
       <div>
         <h1 className={styles.title}>日本地図から探す</h1>
-        <div>{<Image class={styles.japanMap} src={localImage} />}</div>
+        <div>
+          <Image class={styles.japanMap} src={localImage} />
+        </div>
         {/*北海道*/}
         <div className={styles.japanMapAreaHokkaido}>
           <a>北海道</a>
@@ -63,7 +65,7 @@ const Home = () => {
           <a>関東</a>
           <ul className={styles.animeccaMapListKanto}>
             <li className={styles.animeccaMapItem}>
-              <a href="#">東京都</a>
+              <a href="/prefecture/東京都">東京都</a>
             </li>
             <li className={styles.animeccaMapItem}>
               <a href="#">神奈川県</a>
