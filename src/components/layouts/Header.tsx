@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import pic from '../../../public/Group47.png'
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false)
@@ -13,7 +14,9 @@ const Header = () => {
       <div className="container mx-auto px-3">
         <header className="flex justify-between py-3 ">
           <Link href="/">
-            <h1>ロゴ</h1>
+            <h1>
+              <img src={pic.src} alt="pic" className="h-11 w-30" />
+            </h1>
           </Link>
 
           {/* humbergerbutton */}
