@@ -168,7 +168,7 @@ export default function Prefecture({ params }) {
                     )}
                   </div>
                 </div>
-                <Link href={`/mecca/${mecca.mecca_id}`}>
+                <Link href={`/mecca/${mecca.id}`}>
                   <h3 className={`${itemStyle} mb-3 text-[20px]`}>
                     {mecca.mecca_name}
                   </h3>

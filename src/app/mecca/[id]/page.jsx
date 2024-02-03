@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function Mecca({ params }) {
@@ -13,7 +14,7 @@ export default function Mecca({ params }) {
     about: '',
     place_id: null,
     prefecture: '',
-    photos: ['画像のパス1', '画像のパス2', '画像のパス3'],
+    images: [],
     username: '',
     is_author: null,
     is_favorite: null,
@@ -23,29 +24,31 @@ export default function Mecca({ params }) {
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
 
+  const router = useRouter()
+
   useEffect(() => {
-    // fetch(`${apiUrl}/meccas/${params.id}`)
-    //   .then((res) => {
-    //     return res.json()
-    //   })
-    //   .then((data) => {
-    setMecca({
-      mecca_id: '聖地ID',
-      anime_id: 'アニメID',
-      title: 'あの日見た花の名前を僕達はまだ知らない。',
-      episode: '2',
-      scene: '12:34',
-      mecca_name: '第2話で○○が働いていたカフェ',
-      about:
-        '○○が働いていたカフェのモデルになったお店らしいです。ケーキがおいしくて、特にモンブランが有名で土日にはいつも人がたくさん来ています。○○が働いていたカフェのモデルになったお店らしいです。',
-      place_id: 'ChIJ8T1GpMGOGGARDYGSgpooDWw',
-      prefecture: '都道府県名',
-      photos: ['画像のパス1', '画像のパス2', '画像のパス3'],
-      username: 'test',
-      is_author: '登録者かどうか',
-      is_favorite: 'お気に入り登録しているかどうか',
-    })
-    // })
+    fetch(`${apiUrl}/meccas/${params.id}`)
+      .then((res) => {
+        return res.json()
+      })
+      .then((data) => {
+        console.log(data)
+        setMecca({
+          mecca_id: data.id,
+          anime_id: data.anime_id,
+          title: data.title,
+          episode: data.episode,
+          scene: data.scene,
+          mecca_name: data.mecca_name,
+          about: data.about,
+          place_id: data.place_id,
+          prefecture: data.prefecture,
+          images: data.images,
+          // username: 'test',
+          // is_author: '登録者かどうか',
+          // is_favorite: 'お気に入り登録しているかどうか',
+        })
+      })
   }, [params.id])
 
   useEffect(() => {
@@ -83,7 +86,21 @@ export default function Mecca({ params }) {
         <p className="mr-6 text-[20px]">{place}</p>
         <p className="text-[16px]">{address && address.split(' ')[1]}</p>
       </div>
-      <p className="text-[14px]">{mecca.about}</p>
+      <p className="mb-4 text-[14px]">{mecca.about}</p>
+      <div className="flex">
+        {mecca.images &&
+          mecca.images.length !== 0 &&
+          mecca.images.map((image, index) => {
+            return (
+              <img
+                src={image.path.url}
+                alt=""
+                key={index}
+                className="mr-2 w-[400px]"
+              />
+            )
+          })}
+      </div>
       <div className="flex items-center justify-end">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -101,6 +118,9 @@ export default function Mecca({ params }) {
         </svg>
         <p className="ml-2 text-[14px]">{mecca.username} さん</p>
       </div>
+      <button onClick={() => router.back()} className="your-custom-styles">
+        戻る
+      </button>
     </div>
   )
 }
