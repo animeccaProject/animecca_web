@@ -7,6 +7,7 @@ import { useState } from 'react'
 const Loginpage = () => {
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
+  const [message, setMessage] = useState()
 
   const router = useRouter()
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
@@ -16,8 +17,8 @@ const Loginpage = () => {
 
     const user = {
       user: {
-        username: username,
-        password: password,
+        username,
+        password,
       },
     }
 
@@ -34,25 +35,25 @@ const Loginpage = () => {
       await setCookie('token', data.user.token)
       router.push('/')
     } else {
-      // エラー処理
+      setMessage(data.error)
     }
   }
 
   return (
-    <div className="min-h-screen py-8 px-4 md:px-12">
-      <h2 className="text-2xl font-bold mb-4">ログイン</h2>
+    <div className="min-h-screen px-4 py-8 md:px-12">
+      <h2 className="mb-4 text-2xl font-bold">ログイン</h2>
 
       <form
-        className="bg-slate-200 p-6 rounded shadow-lg"
+        className="rounded bg-slate-200 p-6 shadow-lg"
         onSubmit={onSubmitLogin}
       >
         <div className="mb-4">
-          <label className="text-gray-700 text-sm font-bold mb-2">
+          <label className="mb-2 text-sm font-bold text-gray-700">
             ユーザー名
           </label>
           <input
             type="text"
-            className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+            className="w-full rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             placeholder="名前を入力"
             onChange={(e) => {
               setUsername(e.target.value)
@@ -61,12 +62,12 @@ const Loginpage = () => {
         </div>
 
         <div className="mb-4">
-          <label className="text-gray-700 text-sm font-bold mb-2">
+          <label className="mb-2 text-sm font-bold text-gray-700">
             パスワード
           </label>
           <input
             type="password"
-            className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+            className="w-full rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
             placeholder="パスワードを入力"
             onChange={(e) => {
               setPassword(e.target.value)
@@ -76,11 +77,27 @@ const Loginpage = () => {
 
         <button
           type="submit"
-          className=" text-green-500 py-2 px4 border rounded-md"
+          className=" px4 rounded-md border py-2 text-green-500"
         >
           ログイン
         </button>
       </form>
+      {message && (
+        <div className="mt-2 flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            fill="#FF2D50"
+            class="bi bi-x-circle"
+            viewBox="0 0 16 16"
+          >
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+          </svg>
+          <p className="ml-1 text-[15px]">{message}</p>
+        </div>
+      )}
     </div>
   )
 }
