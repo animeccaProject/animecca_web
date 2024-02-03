@@ -3,6 +3,29 @@
   font-size: 40px;
 }
 
+/*作品から探す*/
+.title2 {
+  text-align: center;
+  font-size: 40px;
+  margin-top: 60px;
+  margin-bottom: 30px;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 100px 100px 100px;
+  gap: 50px;
+  place-items: center;
+}
+
+/*検索*/
+.search {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 50px;
+}
+
 .japanMap {
   display: block;
   margin: auto;
@@ -120,7 +143,7 @@
 /*東海*/
 .japanMapAreaTokai {
   position: absolute;
-  top: 58.7638888889vw;
+  top: 60.7638888889vw;
   left: 57.4444444444vw;
   font-size: 1.7888888889vw;
   font-weight: 700;

@@ -1,4 +1,22 @@
 import Image from 'next/image'
+import pic1 from '../../public/01.png'
+import pic2 from '../../public/02.png'
+import pic3 from '../../public/03.png'
+import pic4 from '../../public/04.png'
+import pic5 from '../../public/05.png'
+import pic6 from '../../public/06.png'
+import pic7 from '../../public/07.png'
+import pic8 from '../../public/08.png'
+import pic9 from '../../public/09.png'
+import pic10 from '../../public/10.png'
+import pic11 from '../../public/11.png'
+import pic12 from '../../public/12.png'
+import pic13 from '../../public/13.png'
+import pic14 from '../../public/14.png'
+import pic15 from '../../public/15.png'
+import serch from '../../public/serch.png'
+
+import Link from 'next/link'
 import localImage from '../../public/1026428.jpg'
 import styles from '../app/styles/Home.module.css'
 
@@ -215,6 +233,92 @@ const Home = () => {
               <a href="#">沖縄県</a>
             </li>
           </ul>
+        </div>
+        <h1 className={styles.title2}>作品から探す</h1>
+        <div className={styles.search}>
+          <form>
+            <input type="text" name="search" placeholder={'サイト内検索'} />
+            <button>
+              <img src={serch.src} height={16} width={16} alt={'search'} />
+            </button>
+          </form>
+        </div>
+        <div className={styles.wrapper}>
+          <div>
+            <Link href="/">
+              <img src={pic1.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic2.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic3.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic4.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic5.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic6.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic7.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic8.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic9.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic10.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic11.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic12.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic13.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic14.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
+          <div>
+            <Link href="#">
+              <img src={pic15.src} alt="pic" className="h-11 w-30" />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
