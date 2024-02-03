@@ -1,6 +1,7 @@
 'use client'
 
 import MapPrefecture from '@/features/map/components/MapPrefecture'
+import { getCookie } from '@/utils/cookies'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
@@ -37,106 +38,26 @@ export default function Prefecture({ params }) {
   const prefecture = decodeURIComponent(params.prefecture)
 
   async function getMeccasByPrefecture() {
-    // const token = await getCookie('token')
-    // const res = await fetch(
-    //   `${apiUrl}/prefecture/${encodeURIComponent(params.prefecture)}`,
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   },
-    // )
-    // const data = await res.json()
-    const meccasDummy = [
+    const token = await getCookie('token')
+    const res = await fetch(
+      `${apiUrl}/meccas/prefecture/${encodeURIComponent(params.prefecture)}`,
       {
-        mecca_id: '1',
-        anime_id: 'アニメID',
-        title: 'あの日見た花の名前を僕達はまだ知らない。1',
-        episode: '2',
-        scene: '12:34',
-        mecca_name: '第2話で○○が働いていたカフェ',
-        about:
-          '○○が働いていたカフェのモデルになったお店らしいです。ケーキがおいしくて、特にモンブランが有名で土日にはいつも人がたくさん来ています。○○が働いていたカフェのモデルになったお店らしいです。',
-        place_id: 'ChIJ8T1GpMGOGGARDYGSgpooDWw',
-        prefecture: '都道府県名',
-        photos: ['画像のパス1', '画像のパス2', '画像のパス3'],
-        username: 'test',
-        is_favorite: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-      {
-        mecca_id: '2',
-        anime_id: 'アニメID',
-        title: 'あの日見た花の名前を僕達はまだ知らない。2',
-        episode: '2',
-        scene: '12:34',
-        mecca_name: '第2話で○○が働いていたカフェ',
-        about:
-          '○○が働いていたカフェのモデルになったお店らしいです。ケーキがおいしくて、特にモンブランが有名で土日にはいつも人がたくさん来ています。○○が働いていたカフェのモデルになったお店らしいです。',
-        place_id: 'ChIJ0evuTo7xGGARfjgAu3epb6w',
-        prefecture: '都道府県名',
-        photos: ['画像のパス1', '画像のパス2', '画像のパス3'],
-        username: 'test',
-        is_favorite: true,
-      },
-      {
-        mecca_id: '3',
-        anime_id: 'アニメID',
-        title: 'あの日見た花の名前を僕達はまだ知らない。3',
-        episode: '2',
-        scene: '12:34',
-        mecca_name: '第2話で○○が働いていたカフェ',
-        about:
-          '○○が働いていたカフェのモデルになったお店らしいです。ケーキがおいしくて、特にモンブランが有名で土日にはいつも人がたくさん来ています。○○が働いていたカフェのモデルになったお店らしいです。',
-        place_id: 'ChIJBZZvCI7xGGARR5Bi5Pt1tyw',
-        prefecture: '都道府県名',
-        photos: ['画像のパス1', '画像のパス2', '画像のパス3'],
-        username: 'test',
-        is_favorite: false,
-      },
-      {
-        mecca_id: '4',
-        anime_id: 'アニメID',
-        title: 'あの日見た花の名前を僕達はまだ知らない。4',
-        episode: '2',
-        scene: '12:34',
-        mecca_name: '第2話で○○が働いていたカフェ',
-        about:
-          '○○が働いていたカフェのモデルになったお店らしいです。ケーキがおいしくて、特にモンブランが有名で土日にはいつも人がたくさん来ています。○○が働いていたカフェのモデルになったお店らしいです。',
-        place_id: 'ChIJBZZvCI7xGGARR5Bi5Pt1tyw',
-        prefecture: '都道府県名',
-        photos: ['画像のパス1', '画像のパス2', '画像のパス3'],
-        username: 'test',
-        is_favorite: false,
-      },
-      {
-        mecca_id: '5',
-        anime_id: 'アニメID',
-        title: 'けろろ',
-        episode: '2',
-        scene: '12:34',
-        mecca_name: '第2話で○○が働いていたカフェ',
-        about:
-          '○○が働いていたカフェのモデルになったお店らしいです。ケーキがおいしくて、特にモンブランが有名で土日にはいつも人がたくさん来ています。○○が働いていたカフェのモデルになったお店らしいです。',
-        place_id: 'ChIJBZZvCI7xGGARR5Bi5Pt1tyw',
-        prefecture: '都道府県名',
-        photos: ['画像のパス1', '画像のパス2', '画像のパス3'],
-        username: 'test',
-        is_favorite: true,
-      },
-    ]
-    // setMeccas(data.meccas)
-    // setPlaceIds(
-    //   data.meccas.map((mecca) => {
-    //     return mecca.place_id
-    //   }),
-    // )
-    setMeccas(meccasDummy)
+    )
+    const data = await res.json()
+    console.log(data)
+
+    setMeccas(data)
     setPlaceIds(
-      meccasDummy.map((mecca) => {
+      data.map((mecca) => {
         return mecca.place_id
       }),
     )
-    const initialFavorites = meccasDummy.reduce((acc, mecca) => {
+
+    const initialFavorites = data.reduce((acc, mecca) => {
       acc[mecca.mecca_id] = mecca.is_favorite
       return acc
     }, {})
@@ -162,7 +83,7 @@ export default function Prefecture({ params }) {
 
     // ステートを更新してUIを即時反映
     setFavorites((prev) => ({ ...prev, [meccaId]: !isFavorite }))
-
+    const token = await getCookie('token')
     // お気に入りの状態をサーバーに送信する
     const method = isFavorite ? 'DELETE' : 'POST' // お気に入り解除の場合はDELETE、追加の場合はPOST
     const res = await fetch(`${apiUrl}/meccas/${meccaId}/favorite`, {
