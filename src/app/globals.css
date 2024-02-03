@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* whole */
+
+body {
+  background: url("/background.jpg") center/cover;
+  background-color: #76d8ff;
+  background-attachment: fixed;
+}
+
 /* Prefecture */
 .ellipsismulti {
   display: -webkit-box;
