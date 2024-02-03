@@ -32,6 +32,10 @@ export default function GoogleMap({ places, handleSelectedPlace, onClose }) {
 
         marker.addListener('click', () => {
           setSelectedPlace(place)
+          if (!place.photos) {
+            setPhotoUrl('')
+            return
+          }
           getPlacePhoto(place.photos[0].name)
         })
       })

@@ -3,6 +3,7 @@
 import Map from '@/features/map/components/Map'
 import { getCookie } from '@/utils/cookies'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function New() {
@@ -28,6 +29,8 @@ export default function New() {
   for (let i = 1; i <= episodeMax; i++) {
     episodes.push(i)
   }
+
+  const router = useRouter()
 
   const inputWrapperStyle = 'flex items-end border-b border-gray-800 pt-6'
   const inputTitleStyle = 'mb-2 mr-5 font-semibold text-[15px]'
@@ -83,7 +86,7 @@ export default function New() {
 
     if (images) {
       for (let i = 0; i < images.length; i++) {
-        mecca.append(`image[${i}]`, images[i])
+        mecca.append(`images[${i}]`, images[i])
       }
     }
 
@@ -102,8 +105,10 @@ export default function New() {
     })
 
     const data = await res.json()
+    // 確認用
+    console.log(data)
     if (res.ok) {
-      router.push(`/mecca/${data.mecca.mecca_id}`)
+      router.push(`/mecca/${data.id}`)
     } else {
       //エラー処理
     }
