@@ -91,7 +91,7 @@ export default function GoogleMap({ places, handleSelectedPlace, onClose }) {
           <button
             className="border border-gray-800 bg-[#69cefa] px-4 py-2 text-[14px] font-semibold"
             onClick={() => {
-              handleSelectedPlace(selectedPlace)
+              handleSelectedPlace(selectedPlace || places[0])
               onClose()
             }}
           >

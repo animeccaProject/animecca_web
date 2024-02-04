@@ -2,9 +2,8 @@
 
 import Map from '@/features/map/components/Map'
 import { getCookie } from '@/utils/cookies'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function New() {
   const [animeId, setAnimeId] = useState('')
@@ -17,20 +16,35 @@ export default function New() {
   const [prefecture, setPrefecture] = useState('')
   const [images, setImages] = useState(null)
 
+  const [titleOptions, setTitleOptions] = useState([])
+  const [episodes, setEpisodes] = useState()
+  const [episodesArray, setEpisodesArray] = useState([])
+  const [episodesCount, setEpisodesCount] = useState()
   const [placeName, setPlaceName] = useState('')
   const [places, setPlaces] = useState([])
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const closeModal = () => setIsModalOpen(false)
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
-  const episodes = []
-  const episodeMax = 10 // Annict から取得したい
-  for (let i = 1; i <= episodeMax; i++) {
-    episodes.push(i)
-  }
+  useEffect(() => {
+    if (episodesCount > 0) {
+      makeEpisodes()
+    }
+  }, [episodesCount])
 
   const router = useRouter()
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+
+  // const episodesArray = []
+
+  function makeEpisodes() {
+    const episodes = []
+    for (let i = 1; i <= episodesCount; i++) {
+      episodes.push(i)
+    }
+    setEpisodesArray(episodes)
+  }
 
   const inputWrapperStyle = 'flex items-end border-b border-gray-800 pt-6'
   const inputTitleStyle = 'mb-2 mr-5 font-semibold text-[15px]'
@@ -40,10 +54,25 @@ export default function New() {
     const hours = Math.floor(seconds / 3600)
     const minutes = Math.floor((seconds % 3600) / 60)
     const secs = seconds % 60
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+    return `${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+  }
+
+  async function getAnnimeInfo() {
+    const res = await fetch(
+      `https://api.annict.com/v1/works?filter_title=${title}&fields=id,title,episodes_count&per_page=5&access_token=0oxwKJmy3jG3S5De80O4Xazyomz35ptdnyQ7WpbAkrE`,
+    )
+    const { works } = await res.json()
+    console.log(works)
+    setTitleOptions(works)
   }
 
   async function getInfoByPlace() {
+    if (!placeName) {
+      return
+    }
+
     const res = await fetch(`/api/map/getinfo-byplace?place=${placeName}`)
     const { places } = await res.json()
     setPlaces(places)
@@ -73,7 +102,7 @@ export default function New() {
     mecca.append(
       'mecca',
       JSON.stringify({
-        anime_id: 1,
+        anime_id: animeId,
         title,
         episode,
         scene: formatScene(sceneSeconds),
@@ -105,7 +134,6 @@ export default function New() {
     })
 
     const data = await res.json()
-    // 確認用
     console.log(data)
     if (res.ok) {
       router.push(`/mecca/${data.id}`)
@@ -119,7 +147,7 @@ export default function New() {
       <div>
         <h1 className="ml-5 text-[28px]">聖地の登録</h1>
         <form onSubmit={postMecca} className="m-auto w-[800px]">
-          <div className={inputWrapperStyle}>
+          <div className={`${inputWrapperStyle} relative`}>
             <p className={inputTitleStyle}>作品名</p>
             <input
               type="text"
@@ -127,8 +155,31 @@ export default function New() {
               className={inputStyle}
               onChange={(e) => {
                 setTitle(e.target.value)
+                getAnnimeInfo(e.target.value)
               }}
+              value={title}
             />
+            {titleOptions.length !== 0 && (
+              <div className="absolute top-[70px] bg-white px-3 py-2 text-[14px] shadow shadow-gray-500">
+                {titleOptions.map((titleOption, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className="cursor-pointer py-1.5"
+                      onClick={() => {
+                        setTitle(titleOption.title)
+                        setAnimeId(titleOption.id)
+                        setEpisodesCount(titleOption.episodes_count)
+                        setTitleOptions([])
+                        makeEpisodes()
+                      }}
+                    >
+                      {titleOption.title}
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </div>
           <div className="mt-6 flex items-center gap-12">
             <div className="flex items-center border-b border-gray-800">
@@ -139,13 +190,14 @@ export default function New() {
                 }}
                 className="px-4 py-1"
               >
-                {episodes.map((episode) => {
-                  return (
-                    <option key={episode} value={episode}>
-                      {episode}
-                    </option>
-                  )
-                })}
+                {episodesArray.length !== 0 &&
+                  episodesArray.map((episode) => {
+                    return (
+                      <option key={episode} value={episode}>
+                        {episode}
+                      </option>
+                    )
+                  })}
               </select>
             </div>
             <div className="flex items-center">
@@ -223,13 +275,12 @@ export default function New() {
             />
           </div>
           <div className="mt-8 flex justify-end gap-7">
-            {/* 前にいたページに戻りたいが... */}
-            <Link
-              href="/"
+            <button
+              onClick={() => router.back()}
               className="border border-gray-600 px-4 py-2 text-[14px] text-gray-600"
             >
               キャンセル
-            </Link>
+            </button>
             <button
               type="submit"
               className="border border-gray-800 bg-[#69cefa] px-10 py-2.5 text-[14px] font-semibold"
