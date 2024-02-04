@@ -30,9 +30,11 @@ const Loginpage = () => {
       body: JSON.stringify(user),
     })
     const data = await res.json()
+    console.log(data)
     if (res.ok) {
       await setCookie('username', data.user.username)
       await setCookie('token', data.user.token)
+      await setCookie('id', data.user.id)
       router.push('/')
     } else {
       setMessage(data.error)

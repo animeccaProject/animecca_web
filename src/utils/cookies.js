@@ -12,3 +12,7 @@ export async function getCookie(name) {
     return obj.value
   }
 }
+
+export async function deleteCookie(name) {
+  cookies().delete(name)
+}

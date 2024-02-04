@@ -1,30 +1,43 @@
 'use client'
 
-import MapPrefecture from '@/features/map/components/MapPrefecture'
+import MapUser from '@/features/map/components/MapUser'
 import { getCookie } from '@/utils/cookies'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 
-export default function Prefecture({ params }) {
+export default function Mylist({ params }) {
   const [meccas, setMeccas] = useState([])
   const [placeIds, setPlaceIds] = useState([])
   const [places, setPlaces] = useState([])
   const [selectedIndex, setSelectedIndex] = useState()
   const [favorites, setFavorites] = useState({})
+  const [username, setUsername] = useState('ゲスト')
 
   const scrollContainerRef = useRef(null)
   const selectedItemRef = useRef(null)
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL
-  const prefecture = decodeURIComponent(params.prefecture)
+
+  // useEffect(() => {
+  //   getMeccasByUser()
+  //   getUsername()
+  // }, [params.id])
 
   useEffect(() => {
-    getMeccasByPrefecture()
-  }, [params.prefecture])
+    getMeccasByUser()
+    getUsername()
+  }, [])
 
   useEffect(() => {
     getPlacesInfo()
   }, [meccas])
+
+  async function getUsername() {
+    const name = await getCookie('username')
+    if (name) {
+      setUsername(name)
+    }
+  }
 
   useEffect(() => {
     if (selectedItemRef.current && scrollContainerRef.current) {
@@ -37,16 +50,13 @@ export default function Prefecture({ params }) {
     }
   }, [selectedIndex])
 
-  async function getMeccasByPrefecture() {
+  async function getMeccasByUser() {
     const token = await getCookie('token')
-    const res = await fetch(
-      `${apiUrl}/meccas/prefecture/${encodeURIComponent(params.prefecture)}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const res = await fetch(`${apiUrl}/favorites`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    )
+    })
     const data = await res.json()
     // 確認用
     console.log(data)
@@ -59,7 +69,7 @@ export default function Prefecture({ params }) {
     )
 
     const initialFavorites = data.reduce((acc, mecca) => {
-      acc[mecca.id] = mecca.is_favorites
+      acc[mecca.id] = true
       return acc
     }, {})
     // 確認用
@@ -107,12 +117,11 @@ export default function Prefecture({ params }) {
     <div className="m-auto flex h-[640px] w-[1100px] gap-20 border border-gray-800 bg-white p-14">
       <div>
         <h1 className="mb-10">
-          <span className="pr-1 text-[32px]">{prefecture}</span>
-          <span className="pr-1 text-[20px]">の聖地一覧</span>
+          <span className="pr-1 text-[32px]">{username}</span>
+          <span className="pr-1 text-[20px]">さんのマイリスト</span>
         </h1>
-        <MapPrefecture
+        <MapUser
           places={places}
-          prefecture={params.prefecture}
           handleSelectedPlaceIndex={handleSelectedPlaceIndex}
         />
       </div>
